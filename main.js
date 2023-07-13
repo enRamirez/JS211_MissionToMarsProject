@@ -10,9 +10,39 @@ const jobTypes = {
 };
 
 // Your code will go here
+class CrewMember {
+  constructor(name, job, specialSkill){
+    this.name = name;
+    this.job = job;
+    this.specialSkill = specialSkill;
+    this.ship = null;
+  }
+
+  enterShip(ship){
+    ship.crew.push(this);
+    this.ship = ship;
+  }
+}
 
 
 
+
+class Ship {
+  constructor(name, type, ability){
+    this.name = name;
+    this.type = type;
+    this.ability = ability;
+    this.crew = [];
+  }
+
+  missionStatement(){
+    if(this.crew.length == 0){
+      return "Can't perform a mission yet."
+    } else {
+      return this.ability;
+    }
+  }
+}
 
 
 
@@ -36,6 +66,7 @@ if (typeof describe === 'function'){
       // this creates a new Ship. Can you build a class that can be called so that this Ship can be built?
       let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
       const crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
+
       crewMember1.enterShip(mav);
       assert.equal(crewMember1.ship, mav);
       assert.equal(mav.crew.length, 1);
@@ -46,6 +77,7 @@ if (typeof describe === 'function'){
   describe('Ship', function(){
     it('should have a name, a type, an ability and an empty crew upon instantiation', function(){
       let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
+
       assert.equal(mav.name, 'Mars Ascent Vehicle');
       assert.equal(mav.type, 'MAV');
       assert.equal(mav.ability, 'Ascend into low orbit');
@@ -55,8 +87,10 @@ if (typeof describe === 'function'){
     it('can return a mission statement correctly', function(){
       let mav = new Ship('Mars Ascent Vehicle', 'MAV', 'Ascend into low orbit');
       const crewMember1 = new CrewMember('Rick Martinez', 'pilot', 'chemistry');
+
       let hermes = new Ship('Hermes', 'Main Ship', 'Interplanetary Space Travel');
       const crewMember2 = new CrewMember('Commander Lewis', 'commander', 'geology');
+
       assert.equal(mav.missionStatement(), "Can't perform a mission yet.");
       assert.equal(hermes.missionStatement(), "Can't perform a mission yet.");
 
